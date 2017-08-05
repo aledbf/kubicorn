@@ -101,8 +101,14 @@ func RunDelete(options *DeleteOptions) error {
 		return fmt.Errorf("Unable to init reconciler: %v", err)
 	}
 
-	if err := reconciler.Destroy(); err != nil {
+	deleteCluster, err := reconciler.Destroy()
+	if err != nil {
 		return fmt.Errorf("Unable to destroy resources for cluster [%s]: %v", options.Name, err)
+	}
+
+	err = stateStore.Commit(deleteCluster)
+	if err != nil {
+		return fmt.Errorf("Unable to save deleted cluster state store: %v", err)
 	}
 
 	if options.Purge {

@@ -27,16 +27,16 @@ const (
 )
 
 type Cluster struct {
-	metav1.TypeMeta
+	metav1.TypeMeta `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Name              string
-	ServerPools       []*ServerPool
-	Cloud             string
-	Location          string
-	Ssh               *Ssh
-	Network           *Network
-	Values            *Values
-	KubernetesApi     *KubernetesApi
+	Name              string `json:"name,omitempty"`
+	ServerPools       []*ServerPool `json:"serverPools,omitempty"`
+	Cloud             string `json:"cloud,omitempty"`
+	Location          string `json:"location,omitempty"`
+	Ssh               *Ssh `json:"ssh,omitempty"`
+	Network           *Network `json:"network,omitempty"`
+	Values            *Values `json:"values,omitempty"`
+	KubernetesApi     *KubernetesApi `json:"kubernetesApi,omitempty"`
 }
 
 func NewCluster(name string) *Cluster {
